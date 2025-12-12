@@ -1,0 +1,26 @@
+repos:
+    - repo: https://github.com/biobuddies/helicopyter
+      rev: main
+      hooks:
+          - id: actionlint
+          - id: cookiecutter
+          - id: basedpyright
+          - id: django-upgrade
+          - id: djlint-django
+          - id: djlint-jinja
+          - id: dot-yaml
+          - id: end-of-file-fixer
+          - id: hadolint
+          - id: helicopyter
+          - id: mailmap
+
+          - id: ruff-check-fix
+          - id: ruff-format
+          - id: shellcheck
+          # - id: shfmt  # GitHub 503 errors downloading shfmt binary
+          - id: trailing-whitespace-fixer
+          - id: typos
+          - id: validate-pyproject
+          - id: uv-pip-check
+          - id: uv-pip-compile
+          - id: yamllint
