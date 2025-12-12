@@ -1,0 +1,9 @@
+{
+    "name": "lynch-library",
+    "version": "0",
+    "description": "next-minimal",
+    "devDependencies": {
+        "prettier": "*",
+        "prettier-plugin-toml": "*"
+    }
+}

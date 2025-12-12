@@ -1,11 +1,9 @@
 # Lynch Library TODO
 
-## Django Project Setup
-- [ ] Run `django-admin startproject config` (settings.py will live in config directory)
-- [ ] Note: This is a web server application, not a library for installation by others
+
 
 ## Models (Commit 1)
-- [ ] Define `CatalogItem` or `Media` model with:
+- [ ] Define `Podcast` model with:
   - [ ] URL field
   - [ ] Title field
   - [ ] Foreign key to Author model
