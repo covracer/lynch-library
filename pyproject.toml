@@ -1,63 +1,39 @@
-[build-system]
-requires = ["setuptools>=45", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "lynch-library"
-version = "0.1.0"
-description = "Catalog information about Lynch syndrome"
-authors = [
-    {name = "Lynch Library", email = "noreply@example.com"}
+classifiers = [
+    'Programming Language :: Python :: 3.12',
+    'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
+    'Operating System :: OS Independent',
 ]
-readme = "README.md"
-requires-python = ">=3.11"
 dependencies = [
-    "django",
-    "requests",
-    "beautifulsoup4",
+    'django',
 ]
+description = 'Cookiecutter template for continuously bootstrapped repos'
+name = 'measles'
+requires-python = '>=3.12'
+version = '0'
 
 [project.optional-dependencies]
-dev = [
-    "actionlint-py",
-    "cookiecutter",
-    "django-upgrade",
-    "djlint",
-    "factory-boy",
-    "pre-commit",
-    "pre-commit-hooks",
-    "pytest",
-    "pytest-cov",
-    "pytest-django",
-    "ruff",
-    "shellcheck-py",
-    "typos",
-    "validate-pyproject",
-    "yamllint",
+precommit = [
+    'actionlint-py',
+    'basedpyright',
+    'cookiecutter',
+    'django-upgrade',
+    'djlint',
+    'hadolint-py @ git+https://github.com/AleksaC/hadolint-py.git',
+    'pre-commit-hooks',
+    'pytest',
+    'pytest-cov',
+    'ruff',
+    'shellcheck-py',
+    'shfmt-py',
+    'typos',
+    'validate-pyproject[all]',
+    'yamllint',
 ]
 
-[tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "config.settings"
-python_files = ["tests.py", "test_*.py", "*_tests.py"]
-addopts = "--cov --cov-report=term-missing:skip-covered"
+[tool.basedpyright]
+extends = '.biobuddies/basedpyright.toml'
+failOnWarnings = false
 
-[tool.coverage.run]
-source = ["."]
-omit = [
-    "*/migrations/*",
-    "*/venv/*",
-    "*/.venv/*",
-    "*/tests/*",
-    "manage.py",
-    "config/wsgi.py",
-    "config/asgi.py",
-]
-
-[tool.coverage.report]
-exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "raise AssertionError",
-    "raise NotImplementedError",
-    "if __name__ == .__main__.:",
-]
+[tool.ruff]
+extend = '.biobuddies/ruff.toml'
