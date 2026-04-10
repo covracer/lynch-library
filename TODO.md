@@ -3,13 +3,13 @@
 
 
 ## Models (Commit 1)
-- [ ] Define `Podcast` model with:
-  - [ ] URL field
-  - [ ] Title field
-  - [ ] Foreign key to Author model
-  - [ ] Foreign key to Publisher model
-- [ ] Create Author model
-- [ ] Create Publisher model
+- [x] Define `Podcast` model with:
+  - [x] URL field
+  - [x] Title field
+  - [x] Foreign key to Author model
+  - [x] Foreign key to Publisher model
+- [x] Create Author model
+- [x] Create Publisher model
 
 ## Management Command 1 (Commit 2)
 - [ ] Write management command to scrape Dave Dubin's "Living with Lynch" podcast
