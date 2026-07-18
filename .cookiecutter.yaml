@@ -1,2 +1,10 @@
 default_context:
-    languages: Node,Python
+    languages: Node,Python,Terraform
+    python_dependencies:
+        - aiohttp
+        - django
+        - django-storages[s3]
+    python_optional_dependencies:
+        pre-commit:
+            - factory-boy
+            - helicopyter @ git+https://github.com/biobuddies/helicopyter.git

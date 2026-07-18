@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 CONA = 'lynch-library'
 R2_URL = environ.get('R2_URL', 'off')
 
-SECRET_KEY = "django-insecure-..."
+SECRET_KEY = 'django-insecure--F68PuhrOQapDB2E3Z83kYcM03BpILKrgfTHKTCDUSCaVmQ8UzjbQKp2x1K_j2_udVs'
 
 DEBUG = True
 

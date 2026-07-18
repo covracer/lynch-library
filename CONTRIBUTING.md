@@ -7,12 +7,21 @@ simplest:
 * Inline single-use literals
 * For twice-used literals:
     - Reuse single definition when diverging values would cause critical failure
-    - Duplicate and inline otherwise, commenting `# dup other/file.py:123` in both places
+    - Duplicate and inline otherwise, commenting in both places, e.g. same file
+      `# dup :12 tasks.uv-pip-compile` or `# dup other/file.py:345 favorite_function()`
     - Search for duplicates when adjusting
 * Choose good names for classes, functions, and variables:
     - Use whole words like `index` and `--long-command-line-arguments`
     - Verbs over nouns
     - Avoid abbreviations like `i`
+    - Four Letter AbbreviatioNs (FLANs):
+        - COdeNAme (CONA)
+        - ENVIronment (ENVI)
+        - Fully Qualified Domain Name (FQDN)
+        - GIt HAsH (GIHA)
+        - ORGanizatioN (ORGN)
+        - ROLE (ROLE)
+        - TAg/BRanch (TABR)
     - Avoid substring matches
 * Chain function calls
 * Use the ternary operator
@@ -41,18 +50,56 @@ simplest:
     - `from subprocess import check_call, check_output; check_call(...); check_output(...)`
     - Usually easiest to not `re.compile` at all than worry about aliasing the builtin
     - Omit `#!` shebang and explicit encoding lines
+* Write prose like Strunk, White, and Zinsser. Join sentences and sentence fragments with
+  appropriate punctuation; leave freestanding fragments unpunctuated. Use comma, colon, and
+  semicolon frequently. Use parenthesis occasionally. Use em dash rarely, typeset as `--` two
+  regular dashes or `&mdash;`.
 * `git` well:
     - Avoid committing unrelated files by avoiding `git add -a`, `git add --all`, `git add .`, etc.
     - If asked to clobber uncommitted changes, copy to /tmp/ first
     - Avoid train-of-thought and bisect-breaking commits
-    - Answer authorship and timing questions with evidence from the appropriately filtered git log
-    - Branches should almost always track `origin/main`
-    - Create new branches with `git checkout -b noslash-kebab-branch-name origin/main`
-    - Set upstream for existing branches with `git branch --set-upstream-to=origin/main`
+    - Be ready to read the (appropriately filtered) git log:
+        * Requests to go back or restore usually need the git log to find the previous state
+        * Answer authorship and timing questions with evidence from the git log
+    - Always track `origin/main`:
+        * This flow combines convention and configuration for efficient everyday commands
+        * `git switch --create my-feature-or-fix origin/main` (old misconfigured branches:
+          `git branch --set-upstream-to=origin/main`)
+        * `git pull` discovers new commits and rebases because `pull.rebase=true`
+        * `git push` publishes to the current branch name because `push.default=current`
     - Use `git commit --all --amend --no-edit` and squash/fixup to iterate on commits
     - `GIT_SEQUENCE_EDITOR=:` or similar to avoid interactive commands; stdin is unreliable
     - Follow .github/pull_request_template.md for commit messages / top Pull Request comments
+        * Report testing as one of:
+            - `Existing automated tests only`
+            - `Added automated test...`
+            - A procedure future contributors can reproduce:
+              ```
+              # Manual test procedure
+              commands
+              to_reproduce
+              ```
+        * Never waste space counting or automating existing automated tests
+        * Remove headers for empty Pull Request sections
     - Given a stack of local commits
         * Fan each local commit out to its own remote branch
         * Base each Pull Request on the previous branch
-* Favorite tools: `curl`, `gh`, `git`, `mise`, `npm`, `uv`
+* Favorite tools:
+```sh
+curl
+diffstat
+gh
+git grep
+git log
+git ls-files
+git restore
+git switch
+host
+mise pre-commit-all
+mise test
+npm
+tree
+uv
+```
+* Avoid accidentally including .venv, node_modules, full git history; filter appropriately when
+  intentionally searching them for source code and documentation

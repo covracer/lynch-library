@@ -1,21 +1,20 @@
 [project]
-classifiers = [
-    'Programming Language :: Python :: 3.12',
-    'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
-    'Operating System :: OS Independent',
-]
-dependencies = [
-    'aiohttp',
-    'django',
-    'django-storages[s3]',
-]
-description = 'Cookiecutter template for continuously bootstrapped repos'
-name = 'measles'
+name = 'lynch-library'
 requires-python = '>=3.12'
 version = '0'
 
+dependencies = [
+
+    'aiohttp',
+
+    'django',
+
+    'django-storages[s3]',
+
+]
+
 [project.optional-dependencies]
-precommit = [
+pre-commit = [
     'actionlint-py',
     'basedpyright',
     'cookiecutter',
@@ -25,8 +24,7 @@ precommit = [
     'hadolint-py @ git+https://github.com/AleksaC/hadolint-py.git',
     'helicopyter @ git+https://github.com/biobuddies/helicopyter.git@0a5639d9b887d73d482950f5438a19dee751169c',
     'pre-commit-hooks',
-    'pytest',
-    'pytest-cov',
+    'pyrefly',
     'ruff',
     'shellcheck-py',
     'shfmt-py',
@@ -34,10 +32,18 @@ precommit = [
     'validate-pyproject[all]',
     'yamllint',
 ]
+test = [
+    'pytest',
+    'pytest-cov',
+    'pytest-django',
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = 'config.settings'
+norecursedirs = ['.venv', 'node_modules', '{{cookiecutter.dot}}']
 
 [tool.basedpyright]
 extends = '.biobuddies/basedpyright.toml'
-failOnWarnings = false
 
 [tool.ruff]
 extend = '.biobuddies/ruff.toml'
