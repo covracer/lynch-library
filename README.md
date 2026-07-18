@@ -1,5 +1,27 @@
 # Lynch Library
 
+## Archive a podcast episode
+
+Provision the private `library` bucket:
+
+```bash
+source $SECRETS_FILE
+tofu -chdir=deploys/library/terraform init
+tofu -chdir=deploys/library/terraform apply
+```
+
+Create a bucket-scoped Object Read & Write credential outside Terraform state. The parent
+`CLOUDFLARE_API_TOKEN` needs Account API Tokens Write permission:
+
+```bash
+umask 077
+python -m scripts.create_r2_service_credential > $R2_SECRETS_FILE
+source $R2_SECRETS_FILE
+python manage.py fetch_podcast_episode 2
+```
+
+The command streams the origin response to R2 without creating a local audio file.
+
 This project aims to catalog information about [Lynch syndrome](https://en.wikipedia.org/wiki/Lynch_syndrome), also known as DNA mismatch repair deficiency. This project is entirely AI generated.
 
 ## Contributing

@@ -5,7 +5,9 @@ classifiers = [
     'Operating System :: OS Independent',
 ]
 dependencies = [
+    'aiohttp',
     'django',
+    'django-storages[s3]',
 ]
 description = 'Cookiecutter template for continuously bootstrapped repos'
 name = 'measles'
@@ -19,7 +21,9 @@ precommit = [
     'cookiecutter',
     'django-upgrade',
     'djlint',
+    'factory-boy',
     'hadolint-py @ git+https://github.com/AleksaC/hadolint-py.git',
+    'helicopyter @ git+https://github.com/biobuddies/helicopyter.git@0a5639d9b887d73d482950f5438a19dee751169c',
     'pre-commit-hooks',
     'pytest',
     'pytest-cov',

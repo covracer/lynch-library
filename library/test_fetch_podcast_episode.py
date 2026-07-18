@@ -1,7 +1,6 @@
 """Tests for fetching an episode from a Libsyn archive."""
 
 from io import BytesIO, StringIO
-from pathlib import Path
 
 from pytest import MonkeyPatch
 
@@ -23,7 +22,7 @@ def test_parse_audio_url():
     assert parse_audio_url(document) == 'https://media.example.com/episode.m4a'
 
 
-def test_fetch_second_episode(monkeypatch: MonkeyPatch, tmp_path: Path):
+def test_fetch_second_episode(monkeypatch: MonkeyPatch):
     responses = {
         'https://example.com/2019/12': b"""<h2 class="section-heading"><a href="https://example.com/second">Second</a></h2>
 <h2 class="section-heading"><a href="https://example.com/first">First</a></h2>""",
@@ -34,8 +33,18 @@ def test_fetch_second_episode(monkeypatch: MonkeyPatch, tmp_path: Path):
         'library.management.commands.fetch_podcast_episode.urlopen',
         lambda url: BytesIO(responses[url]),
     )
-    stdout = StringIO()
-    Command(stdout=stdout).handle(
-        episode_number=2, archive_url='https://example.com/2019/12', output=tmp_path
+    saved = {}
+
+    class Storage:
+        def save(self, name, content):
+            saved[name] = b''.join(content.chunks(chunk_size=2))
+            return name
+
+    monkeypatch.setattr(
+        'library.management.commands.fetch_podcast_episode.storages', {'library': Storage()}
     )
-    assert (tmp_path / 'example.com/2019/12/second/second.mp3').read_bytes() == b'audio'
+    stdout = StringIO()
+    Command(stdout=stdout).handle(episode_number=2, archive_url='https://example.com/2019/12')
+    destination = 'example.com/2019/12/second/second.mp3'
+    assert saved[destination] == b'audio'
+    assert stdout.getvalue() == f'{destination}\n'

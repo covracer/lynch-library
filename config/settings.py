@@ -10,10 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from os import environ
 from pathlib import Path
+from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+CONA = 'lynch-library'
+R2_URL = environ.get('R2_URL', 'off')
 
 SECRET_KEY = "django-insecure-..."
 
@@ -106,6 +110,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+STORAGES = {
+    'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+    'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
+}
+if not R2_URL.startswith('off'):
+    r2_url = urlparse(R2_URL)
+    STORAGES['library'] = {
+        'BACKEND': 'storages.backends.s3.S3Storage',
+        'OPTIONS': {
+            'access_key': r2_url.username,
+            'bucket_name': r2_url.path.removeprefix('/'),
+            'endpoint_url': f'{r2_url.scheme}://{r2_url.hostname}',
+            'region_name': 'auto',
+            'secret_key': r2_url.password,
+        },
+    }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

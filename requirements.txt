@@ -2,14 +2,35 @@
 #    uv pip compile --all-extras --output-file requirements.txt --python-platform linux pyproject.toml
 actionlint-py==1.7.11.24
     # via measles (pyproject.toml)
+aiohappyeyeballs==2.7.1
+    # via aiohttp
+aiohttp==3.14.1
+    # via measles (pyproject.toml)
+aiosignal==1.4.0
+    # via aiohttp
 arrow==1.4.0
     # via cookiecutter
 asgiref==3.11.1
     # via django
+attrs==26.1.0
+    # via
+    #   aiohttp
+    #   cattrs
+    #   jsii
 basedpyright==1.38.4
     # via measles (pyproject.toml)
 binaryornot==0.6.0
     # via cookiecutter
+boto3==1.43.51
+    # via django-storages
+botocore==1.43.51
+    # via
+    #   boto3
+    #   s3transfer
+cattrs==26.1.0
+    # via jsii
+cdktf==0.21.0
+    # via helicopyter
 certifi==2026.2.25
     # via requests
 charset-normalizer==3.4.6
@@ -20,6 +41,8 @@ click==8.3.1
     #   djlint
 colorama==0.4.6
     # via djlint
+constructs==10.7.0
+    # via cdktf
 cookiecutter==2.7.1
     # via measles (pyproject.toml)
 coverage==7.13.5
@@ -27,29 +50,55 @@ coverage==7.13.5
 cssbeautifier==1.15.4
     # via djlint
 django==6.0.4
+    # via
+    #   measles (pyproject.toml)
+    #   django-storages
+django-storages==1.14.6
     # via measles (pyproject.toml)
 django-upgrade==1.30.0
     # via measles (pyproject.toml)
 djlint==1.36.4
     # via measles (pyproject.toml)
+docstring-parser==0.18.0
+    # via typed-argument-parser
 editorconfig==0.17.1
     # via
     #   cssbeautifier
     #   jsbeautifier
+factory-boy==3.3.3
+    # via measles (pyproject.toml)
+faker==40.31.0
+    # via factory-boy
 fastjsonschema==2.21.2
     # via validate-pyproject
+frozenlist==1.8.0
+    # via
+    #   aiohttp
+    #   aiosignal
 hadolint-py @ git+https://github.com/AleksaC/hadolint-py.git@446db46ab58b26eb8e40d5626c1229e8cf75b3b5
     # via measles (pyproject.toml)
+helicopyter @ git+https://github.com/biobuddies/helicopyter.git@0a5639d9b887d73d482950f5438a19dee751169c
+    # via measles (pyproject.toml)
 idna==3.11
-    # via requests
+    # via
+    #   requests
+    #   yarl
 iniconfig==2.3.0
     # via pytest
 jinja2==3.1.6
     # via cookiecutter
+jmespath==1.1.0
+    # via
+    #   boto3
+    #   botocore
 jsbeautifier==1.15.4
     # via
     #   cssbeautifier
     #   djlint
+jsii==1.139.0
+    # via
+    #   cdktf
+    #   constructs
 json5==0.13.0
     # via djlint
 markdown-it-py==4.0.0
@@ -58,6 +107,10 @@ markupsafe==3.0.3
     # via jinja2
 mdurl==0.1.2
     # via markdown-it-py
+multidict==6.7.1
+    # via
+    #   aiohttp
+    #   yarl
 nodejs-wheel-binaries==24.14.0
     # via basedpyright
 packaging==26.0
@@ -74,6 +127,15 @@ pluggy==1.6.0
     #   pytest-cov
 pre-commit-hooks==6.0.0
     # via measles (pyproject.toml)
+propcache==0.5.2
+    # via
+    #   aiohttp
+    #   yarl
+publication==0.0.3
+    # via
+    #   cdktf
+    #   constructs
+    #   jsii
 pygments==2.19.2
     # via
     #   pytest
@@ -85,7 +147,10 @@ pytest==9.0.2
 pytest-cov==7.1.0
     # via measles (pyproject.toml)
 python-dateutil==2.9.0.post0
-    # via arrow
+    # via
+    #   arrow
+    #   botocore
+    #   jsii
 python-slugify==8.0.4
     # via cookiecutter
 pyyaml==6.0.3
@@ -103,6 +168,8 @@ ruamel-yaml==0.19.1
     # via pre-commit-hooks
 ruff==0.15.7
     # via measles (pyproject.toml)
+s3transfer==0.19.1
+    # via boto3
 shellcheck-py==0.11.0.1
     # via measles (pyproject.toml)
 shfmt-py==3.12.0.2
@@ -122,13 +189,27 @@ tqdm==4.67.3
     # via djlint
 trove-classifiers==2026.1.14.14
     # via validate-pyproject
+typed-argument-parser==1.12.0
+    # via helicopyter
+typeguard==2.13.3
+    # via
+    #   cdktf
+    #   jsii
+typing-extensions==4.16.0
+    # via
+    #   cattrs
+    #   jsii
 typos==1.45.0
     # via measles (pyproject.toml)
 tzdata==2025.3
     # via arrow
 urllib3==2.6.3
-    # via requests
+    # via
+    #   botocore
+    #   requests
 validate-pyproject==0.25
     # via measles (pyproject.toml)
 yamllint==1.38.0
     # via measles (pyproject.toml)
+yarl==1.24.2
+    # via aiohttp

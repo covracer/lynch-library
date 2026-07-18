@@ -1,12 +1,14 @@
 """Download episodes from the AliveandKickn Libsyn archive."""
 
 from argparse import ArgumentParser
+from contextlib import closing
 from html.parser import HTMLParser
-from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
+from django.core.files import File
+from django.core.files.storage import storages
 from django.core.management.base import BaseCommand, CommandError
 
 
@@ -74,18 +76,17 @@ def parse_audio_url(document: bytes) -> str:
 
 
 class Command(BaseCommand):
-    """Download an episode into the local source mirror."""
+    """Stream an episode into the podcast archive."""
 
     help = 'Download an AliveandKickn episode by its chronological number'
 
     def add_arguments(self, parser: ArgumentParser) -> None:
-        """Accept a chronological episode number and storage options."""
+        """Accept a chronological episode number and archive URL."""
         parser.add_argument('episode_number', type=int)
         parser.add_argument('--archive-url', default='https://aliveandkickn.libsyn.com/2019/12')
-        parser.add_argument('--output', type=Path, default=Path('library/podcasts'))
 
-    def handle(self, episode_number: int, archive_url: str, output: Path, **_options: Any) -> None:
-        """Discover and download the selected episode."""
+    def handle(self, episode_number: int, archive_url: str, **_options: Any) -> None:
+        """Discover and stream the selected episode to R2."""
         episode_links = list(reversed(parse_episode_links(read_url(archive_url))))
         if episode_number < 1 or episode_number > len(episode_links):
             raise CommandError(
@@ -95,13 +96,16 @@ class Command(BaseCommand):
         audio_url = parse_audio_url(read_url(episode_url))
         episode_path = urlparse(episode_url).path.strip('/')
         archive_path = urlparse(archive_url).path.strip('/')
-        destination = (
-            output
-            / urlparse(episode_url).hostname
-            / archive_path
-            / episode_path
-            / Path(urlparse(audio_url).path).name
+        destination = '/'.join(
+            (
+                urlparse(episode_url).hostname or '',
+                archive_path,
+                episode_path,
+                urlparse(audio_url).path.rsplit('/', 1)[-1],
+            )
         )
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes(read_url(audio_url))
-        self.stdout.write(str(destination))
+        if urlparse(audio_url).scheme != 'https':
+            raise CommandError(f'Only HTTPS URLs are supported: {audio_url}')
+        with closing(urlopen(audio_url)) as response:  # noqa: S310 -- scheme checked above
+            saved_destination = storages['library'].save(destination, File(response))
+        self.stdout.write(saved_destination)
